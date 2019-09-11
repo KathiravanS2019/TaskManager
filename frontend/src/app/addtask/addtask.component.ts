@@ -19,7 +19,7 @@ export class AddtaskComponent implements OnInit {
   
   saveTask(){
 	  this.http.post('/saveTask',this.task).subscribe(res => {
-		  this.router.navigate(['/tasks',res]);
+		  this.router.navigate(['/addUser',res]);
 		  this.task = {};
 		  
 	  },(err) => {

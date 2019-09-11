@@ -1,0 +1,93 @@
+<div class="container">
+	<h2>Task Manager</h2>
+	<ul class="nav nav-tabs">
+		<li class="nav-item"><a class="nav-link active" href="#addProject">Add Project</a></li>
+		<li class="nav-item"><a [routerLink]="['/addTask']">Add Task</a></li>
+		<li class="nav-item"><a class="nav-link" [routerLink]="['/addUser']">Add User</a></li>
+		<li class="nav-item"><a class="nav-link" [routerLink]="['/tasks']">View Task</a></li>
+	</ul>
+
+	<div class="row">
+		<form #addProjectForm="ngForm">
+			<div class="form-group row">
+				<label for="project" class="col-sm-2 col-form-label">Project:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="project" [(ngModel)]="project.project" name="projectName">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="startDate" class="col-sm-2 col-form-label">Start Date:</label>
+				<div class="col-sm-4">
+					<input type="date" class="form-control" id="startDate" [(ngModel)]="project.startDate" name="startDate">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="endDate" class="col-sm-2 col-form-label">End Date:</label>
+				<div class="col-sm-4">
+					<input type="date" class="form-control" id="endDate" [(ngModel)]="project.endDate" name="endDate">
+				</div>
+			</div>
+		
+			<div class="form-group row">
+				<label for="priority" class="col-sm-2 col-form-label">Priority:</label>
+				<div class="col-sm-4">
+					<input type="range" class="form-control" id="priority" name="priority" [(ngModel)]="project.priority">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="project" class="col-sm-2 col-form-label">Manager:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" [value]="selectedUser">
+				</div>
+				<button type="submit" class="btn btn-secondary" (click)="searchUser()">Search</button>
+			</div>
+			
+			<button type="submit" class="btn btn-secondary" (click)="saveProject()">Add</button>
+			<button type="submit" class="btn btn-secondary" (click)="resetProject(addProjectForm)">Reset</button>
+		</form>
+		<br />
+		<hr />
+		<section>
+			<div class="form-horizontal">
+				<div class="row form-group">
+					<div class="col col-sm-10">
+						<input type="text" class="form-control" [value]="searchValue" [(ngModel)]="searchText" name="projectSearch" id="projectSearch" />
+						 Sort By:
+							<input type="button" class="btn btn-primary" value="Start Date" (click)="sort('startDate','date')" />
+							<input type="button" class="btn btn-primary" value="End Date" (click)="sort('endDate','date')" />
+							<input type="button" class="btn btn-primary" value="Priority" (click)="sort('priority','number')" />
+							<input type="button" class="btn btn-primary" value="Complete" (click)="sort('priority','number')" />
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="row">
+			<div *ngFor="let project of projects">
+				<div class="row">
+					<div class=row>Project: {{project.project}}</div>
+					<div class=row>
+						No of Tasks: {{getTaskNumber(project.projectId)}} 
+						Completed: {{getCompleted(project.startDate, project.endDate)}}
+					</div>
+					<div class=row>
+						Start Date: {{getDate(project.startDate)}} 
+						End Date: {{getDate(project.endDate)}}</div>
+					<div>Priority: {{project.priority}}</div>
+					<div>
+						<button class="btn btn-secondary" [routerLink]="['/editProject',project.projectId]">Update</button>
+						<button class="btn btn-secondary" (click)="suspendProject(project.projectId)">Suspend</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".nav-tabs a").click(function() {
+			$(this).tab('show');
+		});
+	});
+</script>

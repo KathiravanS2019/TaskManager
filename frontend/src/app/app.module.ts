@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes} from '@angular/router'
+import { RouterModule, Routes,Router} from '@angular/router'
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,6 +12,9 @@ import { TmComponent } from './tm/tm.component';
 import { AddtaskComponent } from './addtask/addtask.component';
 import { EdittaskComponent } from './edittask/edittask.component';
 import { DatePipe } from '@angular/common';
+
+import { AdduserComponent } from './adduser/adduser.component';
+import { AddprojectComponent } from './addproject/addproject.component';
 
 const appRoutes: Routes = [
 { 
@@ -29,7 +32,16 @@ const appRoutes: Routes = [
 	component: EdittaskComponent,
 	data:{ title: 'Task Edit'}
 },
-
+{
+	path: 'addUser',
+	component: AdduserComponent,
+	data:{ title: 'Add User'}
+},
+{
+	path: 'addProject',
+	component: AddprojectComponent,
+	data:{ title: 'Add Project'}
+},
 {  path:'',
    redirectTo:'/tasks',
    pathMatch: 'full'
@@ -41,7 +53,9 @@ const appRoutes: Routes = [
     AppComponent,
     TmComponent,
     AddtaskComponent,
-    EdittaskComponent
+    EdittaskComponent,
+    AdduserComponent,
+    AddprojectComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +66,6 @@ const appRoutes: Routes = [
     appRoutes,
     { enableTracing: true }
     )
-    
   ],
   providers: [ DatePipe ],
   bootstrap: [AppComponent]

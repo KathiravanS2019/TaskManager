@@ -1,0 +1,88 @@
+<div class="container">
+	<h2>Add User</h2>
+	<ul class="nav nav-tabs">
+		<li class="nav-item"><a class="nav-link"
+			[routerLink]="['/addProject']">Add Project</a></li>
+		<li class="nav-item"><a [routerLink]="['/addTask']">Add Task</a></li>
+		<li class="nav-item"><a class="nav-link active" href="#addUser">Add
+				User</a></li>
+		<li class="nav-item"><a class="nav-link"
+			[routerLink]="['/tasks']">View Task</a></li>
+	</ul>
+
+	<div class="row">
+		<form #addUserForm="ngForm">
+			<div class="form-group row">
+				<label for="firstName" class="col-sm-2 col-form-label">First Name:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" name="firstName">
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<label for="lastName" class="col-sm-2 col-form-label">Last Name:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="employeeID" class="col-sm-2 col-form-label">Employee ID:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="employeeID" [(ngModel)]="user.employeeID" name="employeeID">
+				</div>
+			</div>
+			<button type="submit" class="btn btn-secondary" (click)="saveUser()">Add</button>
+			<button type="submit" class="btn btn-secondary" (click)="resetUser(addUserForm)">Reset</button>
+		</form>
+		<br />
+		<hr />
+		<section>
+			<div class="form-horizontal">
+				<div class="row form-group">
+					<div class="col col-sm-10">
+						<input type="text" [(ngModel)]="searchText" name="firstName1" size="45">&nbsp;
+						 Sord By:
+							<input type="button" class="btn btn-primary" value="First Name" (click)="sortBy('firstName')" />
+							<input type="button" class="btn btn-primary" value="Last Name" (click)="sortBy('lastName')" />
+							<input type="button" class="btn btn-primary" value="Employee ID" (click)="sortBy('employeeId')" />
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<form #userManager="ngForm">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Employee ID</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of users">
+					<td>{{user.firstName}}</td>
+					<td>{{user.lastName}}</td>
+					<td>{{user.employeeID}}</td>
+					<td>
+						<div>
+							<a [routerLink]="['/editUser',user.id]" class="btn btn-success">Edit</a>
+							<button type="submit" class="btn btn-success"
+								(click)="deleteUser(user.id)">End Task</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+		
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".nav-tabs a").click(function() {
+			$(this).tab('show');
+		});
+	});
+</script>
